@@ -19,6 +19,7 @@ public class Product implements Serializable {
 	private static final long serialVersionUID=1L;
 	
 	@Id
+	@GeneratedValue
 	private int id;
 	private String name;
 	private String description;
@@ -29,6 +30,18 @@ public class Product implements Serializable {
 	@JoinColumn(name="cid")
 	private Category category;
 	
+	public Category getCategory() {
+		return category;
+	}
+
+
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+
+
 	@ManyToOne
 	@JoinColumn(name="sid")
 	private Supplier supplier;
@@ -72,21 +85,6 @@ public class Product implements Serializable {
 	public void setPimg(MultipartFile pimg) {
 		this.pimg = pimg;
 	}
-
-
-
-	public Category getCat() {
-		return category;
-	}
-
-
-
-	public void setCat(Category category) {
-		this.category = category;
-	}
-
-
-
 	public int getId() {
 		return id;
 	}

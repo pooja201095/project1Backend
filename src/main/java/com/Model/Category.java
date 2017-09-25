@@ -2,6 +2,7 @@ package com.Model;
 
 
 import java.io.Serializable;
+
 import java.util.*;
 
 import javax.persistence.*;
@@ -14,7 +15,13 @@ public class Category {
 	@Id
 	private int cid;
 	
-	private String name;
+	private String cname;
+	public String getCname() {
+		return cname;
+	}
+	public void setCname(String cname) {
+		this.cname = cname;
+	}
 	//for listing product
 	@OneToMany(targetEntity=Product.class,fetch=FetchType.EAGER)//,mappedBy=("Category"))
 	private Set<Product> products= new HashSet<Product>(0);
@@ -24,12 +31,7 @@ public class Category {
 	public void setCid(int cid) {
 		this.cid = cid;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 	public Set<Product> getProducts() {
 		return products;
 	}

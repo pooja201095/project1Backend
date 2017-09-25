@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.Dao.SupplierDao;
 import com.Model.Category;
+import com.Model.Product;
 import com.Model.Supplier;
 @SuppressWarnings("Unused")
 @Repository("SupplierDaoImpl")
@@ -35,7 +36,7 @@ public class SupplierDaoImpl implements SupplierDao {
 	{
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();
-		List<Supplier> list= session.createQuery("from supplier").list();
+		List<Supplier> list= session.createQuery("FROM Supplier").list();
 		session.getTransaction().commit();
 		return list;
 	}
@@ -58,5 +59,29 @@ public class SupplierDaoImpl implements SupplierDao {
 		}
 		return p;
 	}
+	
+	
+	public void deleteSupplier(int sid)
+	{
+		Session session= sessionFactory.openSession();
+		session.beginTransaction();
+		Supplier supplier=(Supplier)session.get(Supplier.class,sid);
+		session.delete(supplier);
+		session.getTransaction().commit();
+	}
+	
+	public void updateSupplier(Supplier s)
+	{
+		Session session= sessionFactory.openSession();
+		try{
+		session.beginTransaction();
+		session.update(s);
+		session.getTransaction().commit();
+		}
+		catch(HibernateException ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
 
+	}
 }

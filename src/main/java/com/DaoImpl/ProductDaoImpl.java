@@ -24,11 +24,11 @@ public class ProductDaoImpl implements ProductDao {
 	}
 	
 	
-	public void insertproduct(Product pro)
+	public void insertproduct(Product product)
 	{
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();
-		session.saveOrUpdate(pro);
+		session.saveOrUpdate(product);
 		session.getTransaction().commit();
 	}
 	
@@ -36,7 +36,7 @@ public class ProductDaoImpl implements ProductDao {
 	{
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();
-		List<Product> list= session.createQuery("from product").list();
+		List<Product> list= session.createQuery("FROM Product").list();
 		session.getTransaction().commit();
 		return list;
 	}
@@ -49,8 +49,7 @@ public class ProductDaoImpl implements ProductDao {
 		try{
 			session.getTransaction();
 			p=session.get(Product.class,pid);
-			session.getTransaction().commit();
-			
+			session.getTransaction().commit();	
 		}
 		catch(HibernateException ex)
 		{
@@ -59,5 +58,40 @@ public class ProductDaoImpl implements ProductDao {
 		}
 		return p;
 	}
+	
+	public List<Product> getProdbyId(int cid)
+	{
+		Session session= sessionFactory.openSession();
+		List<Product> products=null;
+		session.beginTransaction();
+		products=session.createQuery("FROM Product where cid="+cid).list();
+		session.getTransaction().commit();
+		return products;
+	}
+	
+	
+	public void deleteProduct(int pid)
+	{
+		Session session= sessionFactory.openSession();
+		session.beginTransaction();
+		Product product=(Product)session.get(Product.class,pid);
+		session.delete(product);
+		session.getTransaction().commit();
+	}
+	
+	public void updateProduct(Product p)
+	{
+		
+		Session session= sessionFactory.openSession();
+		session.beginTransaction();
+		session.update(p);
+		session.getTransaction().commit();
+		
+	}
+	
+	
+	
+	
+	
 
 }

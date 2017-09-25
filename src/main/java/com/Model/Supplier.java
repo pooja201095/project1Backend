@@ -1,6 +1,7 @@
 package com.Model;
 
 import java.io.Serializable;
+
 import java.util.*;
 
 import javax.persistence.*;

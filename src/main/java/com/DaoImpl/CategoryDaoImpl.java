@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.Dao.Categorydao;
+import com.Model.Product;
 import com.Model.User;
 import com.Model.Category;
 @SuppressWarnings("Unused")
@@ -26,11 +27,11 @@ public class CategoryDaoImpl implements Categorydao
 		}
 		
 		
-		public void insertcategory(Category cat)
+		public void insertcategory(Category category)
 		{
 			Session session= sessionFactory.openSession();
 			session.beginTransaction();
-			session.saveOrUpdate(cat);
+			session.saveOrUpdate(category);
 			session.getTransaction().commit();
 		}
 		
@@ -38,7 +39,7 @@ public class CategoryDaoImpl implements Categorydao
 		{
 			Session session= sessionFactory.openSession();
 			session.beginTransaction();
-			List<Category> list= session.createQuery("from category").list();
+			List<Category> list= session.createQuery("FROM Category").list();
 			session.getTransaction().commit();
 			return list;
 		}
@@ -63,5 +64,27 @@ public class CategoryDaoImpl implements Categorydao
 		}
 		
 		
-	}
+		public void deleteCategory(int cid)
+		{
+			Session session= sessionFactory.openSession();
+			session.beginTransaction();
+			Category category=(Category)session.get(Category.class,cid);
+			session.delete(category);
+			session.getTransaction().commit();
+		}
+		
+		public void updateCategory(Category c)
+		{
+			Session session= sessionFactory.openSession();
+			try{
+			session.beginTransaction();
+			session.update(c);
+			session.getTransaction().commit();
+			}
+			catch(HibernateException ex){
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+		}
+}
 
